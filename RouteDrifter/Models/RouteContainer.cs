@@ -201,6 +201,11 @@ namespace RouteDrifter.Models
 #if UNITY_EDITOR
         protected virtual void OnValidate()
         {
+            if (_RoutePoints == null)
+            {
+                _RoutePoints = new List<RoutePoint>();
+            }
+            
             _ThisTransform = GetComponent<Transform>();
             Build();
         }
