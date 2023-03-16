@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
@@ -27,6 +28,8 @@ namespace RouteDrifter.Models
         private List<SamplePoint> _samplePoints = new List<SamplePoint>();
         public Transform Transform => _ThisTransform;
 
+        public Action<List<SamplePoint>> OnBuild;
+
         protected virtual void Awake()
         {
             Initialize();
@@ -47,6 +50,7 @@ namespace RouteDrifter.Models
             UpdateBezierCurves();
             UpdateSamplePoints();
             UpdateLength();
+            OnBuild?.Invoke(new List<SamplePoint>(_samplePoints));
         }
         
         private void UpdateBezierCurves()

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using RouteDrifter.Gizmos;
 using RouteDrifter.Models;
 using RouteDrifter.Utility.Attributes;
@@ -28,5 +30,14 @@ namespace RouteDrifter.Computer
 
         #endregion
 
+        public void RegisterBuildCompleted(Action<List<SamplePoint>> onBuild)
+        {
+            OnBuild += onBuild;
+        }
+        
+        public void UnregisterBuildCompleted(Action<List<SamplePoint>> onBuild)
+        {
+            OnBuild -= onBuild;
+        }
     }
 }
