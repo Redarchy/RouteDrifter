@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace RouteDrifter.Computer.Mesh
 {
+    [ExecuteInEditMode]
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class RouteMesh : MonoBehaviour
     {
@@ -132,5 +133,15 @@ namespace RouteDrifter.Computer.Mesh
 
             _mesh.triangles = _triangles.ToArray();
         }
+        
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (_RouteComputer != null && _RouteComputer.SamplePoints != null)
+            {
+                Build(_RouteComputer.SamplePoints);
+            }
+        }
+#endif
     }
 }
