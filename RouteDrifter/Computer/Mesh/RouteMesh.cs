@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RouteDrifter.Models;
 using RouteDrifter.Utility.Extensions;
 using UnityEngine;
@@ -87,7 +88,35 @@ namespace RouteDrifter.Computer.Mesh
             ClearMesh();
             CreateVertices(samplePoints);
             CreateTriangles();
+            SetUV();
+            
             _mesh.UploadMeshData(false);
+        }
+
+        private void SetUV()
+        {
+            var uvs = new List<Vector2>();
+            
+            var vertexCount = _mesh.vertices.Length;
+
+            for (var vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
+            {
+                float u;
+                float v;
+                if (vertexIndex % 2 == 0)
+                {
+                    u = 0;
+                    v = (float) vertexIndex / vertexCount;
+                    uvs.Add(new Vector2(u, v));
+                    continue;
+                }
+                
+                u = 1;
+                v = (float) vertexIndex / vertexCount;
+                uvs.Add(new Vector2(u, v));
+            }
+
+            _mesh.uv = uvs.ToArray();
         }
 
         private void ClearMesh()
@@ -137,9 +166,16 @@ namespace RouteDrifter.Computer.Mesh
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (_RouteComputer != null && _RouteComputer.SamplePoints != null)
+            try
             {
-                Build(_RouteComputer.SamplePoints);
+                if (_RouteComputer != null && _RouteComputer.SamplePoints != null)
+                {
+                    Build(_RouteComputer.SamplePoints);
+                }
+            }
+            catch (Exception e)
+            {
+                return;
             }
         }
 #endif
