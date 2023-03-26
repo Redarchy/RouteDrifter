@@ -62,7 +62,12 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 3f9024a70b3f1e34c83405d06b7572eb, type: 2}
+  - {fileID: 2100000, guid: 3f9024a70b3f1e34c83405d06b7572eb, type: 2}
+  - {fileID: 2100000, guid: 3f9024a70b3f1e34c83405d06b7572eb, type: 2}
+  - {fileID: 2100000, guid: 3f9024a70b3f1e34c83405d06b7572eb, type: 2}
+  - {fileID: 2100000, guid: 3f9024a70b3f1e34c83405d06b7572eb, type: 2}
+  - {fileID: 2100000, guid: 3f9024a70b3f1e34c83405d06b7572eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,6 +104,7 @@ MonoBehaviour:
   _RouteComputer: {fileID: 7236917749908046163}
   _BuildOnAwake: 1
   _HalfWidth: 0.3
+  _Thickness: 0
 --- !u!1 &7236917749908046162
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,12 +153,12 @@ MonoBehaviour:
   _RoutePoints:
   - _Position: {x: 0, y: 0, z: 0}
     _Tangent: {x: -0.15004969, y: 0, z: 1.3136234}
-  - _Position: {x: 1.0866503, y: 0, z: 1.3655248}
-    _Tangent: {x: -0.08665025, y: 0, z: -0.62670344}
-  - _Position: {x: 2, y: 0, z: 0}
-    _Tangent: {x: 0, y: 0, z: 1.673324}
+  - _Position: {x: 1.0866503, y: 0, z: 1.790491}
+    _Tangent: {x: -0.51715326, y: 0, z: -1.0516696}
+  - _Position: {x: 3.8993983, y: 0, z: 0}
+    _Tangent: {x: 0.40779734, y: 0, z: 1.673324}
   _BuildOnAwake: 0
-  _SampleSpacing: 0.173
+  _SampleSpacing: 0.092
   _SampleResolution: 0.033
-  _Length: 4.1520004
+  _Length: 6.532
   _ThisTransform: {fileID: 7236917749908046160}
