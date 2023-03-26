@@ -364,6 +364,8 @@ namespace RouteDrifter.Computer.Mesh
             {
                 if (_RouteComputer != null && _RouteComputer.SamplePoints != null)
                 {
+                    Initialize();
+
                     Build(_RouteComputer.SamplePoints);
                 }
             }
