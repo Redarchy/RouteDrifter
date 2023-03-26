@@ -16,14 +16,30 @@ namespace RouteDrifter.Managers
         
         private List<RouteComputer> _routeComputers = new List<RouteComputer>();
         private List<RouteFollower> _routeFollowers = new List<RouteFollower>();
-        
-        private float DeltaTime => RouteDrifterDefinitions.DeltaTime;
-        
+
+        private float _deltaTime = RouteDrifterDefinitions.DefaultDeltaTime;
+
+        public float DeltaTime
+        {
+            get => _deltaTime;
+            set => _deltaTime = value;
+        }
+
+        public void EnableUpdate(bool update)
+        {
+            _Update = update;
+        }
+
+        public void UpdateImmediately()
+        {
+            UpdateRouteFollowers(_deltaTime);
+        }
+
         private void Update()
         {
             if (_Update)
             {
-                UpdateRouteFollowers(DeltaTime);
+                UpdateRouteFollowers(_deltaTime);
             }
         }
 

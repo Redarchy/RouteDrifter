@@ -2,6 +2,6 @@
 {
     public class RouteDrifterDefinitions
     {
-        public static float DeltaTime { get; set; } = 1f;
+        public static float DefaultDeltaTime { get; set; } = 1f;
     }
 }
