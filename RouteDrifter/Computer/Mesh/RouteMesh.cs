@@ -42,6 +42,22 @@ namespace RouteDrifter.Computer.Mesh
             }
         }
 
+        public void Set(bool buildOnAwake, float halfWidth, float thickness)
+        {
+            _HalfWidth = halfWidth;
+            _Thickness = thickness;
+
+            // Needed to call it again for instantiating at runtime, not as a scene root object.
+            // Because Awake is called as soon as the object gets instantiated.
+            if (buildOnAwake)
+            {
+                if (_RouteComputer)
+                {
+                    Build(_RouteComputer.SamplePoints);
+                }
+            }
+        }
+        
         private void Initialize()
         {
             _meshFilter = GetComponent<MeshFilter>();
@@ -376,5 +392,6 @@ namespace RouteDrifter.Computer.Mesh
             }
         }
 #endif
+        
     }
 }

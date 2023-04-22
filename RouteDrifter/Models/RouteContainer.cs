@@ -44,6 +44,21 @@ namespace RouteDrifter.Models
         {
             _ThisTransform = GetComponent<Transform>();
         }
+
+        public virtual void Set(bool buildOnAwake, float sampleSpacing, float sampleResolution, List<RoutePoint> routePoints)
+        {
+            _BuildOnAwake = buildOnAwake;
+            _SampleSpacing = sampleSpacing;
+            _SampleResolution = sampleResolution;
+            _RoutePoints = routePoints;
+            
+            // Needed to call it again for instantiating at runtime, not as a scene root object.
+            // Because Awake is called as soon as the object gets instantiated.
+            if (buildOnAwake)
+            {
+                Build();
+            }
+        }
         
         public void Build()
         {
