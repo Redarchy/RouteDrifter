@@ -56,6 +56,10 @@ namespace RouteDrifter.Follower
         // }
         
         #endregion
-        
+
+        public void SetLinearSpeed(float speed)
+        {
+            _LinearSpeed = speed;
+        }
     }
 }
