@@ -61,5 +61,10 @@ namespace RouteDrifter.Follower
         {
             _LinearSpeed = speed;
         }
+
+        public void SetFaceDirection(bool faceDirection)
+        {
+            _FaceDirection = faceDirection;
+        }
     }
 }
