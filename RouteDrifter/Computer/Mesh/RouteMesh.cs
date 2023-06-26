@@ -112,8 +112,22 @@ namespace RouteDrifter.Computer.Mesh
             CreateVertices(samplePoints);
             CreateTriangles();
             SetUV();
+            SetNormals();
             
             _mesh.UploadMeshData(false);
+        }
+
+        private void SetNormals()
+        {
+            var vertexCount = _mesh.vertices.Length;
+            var normals = new Vector3[vertexCount];
+            
+            for (var vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
+            {
+                normals[vertexIndex] = Vector3.up;
+            }
+            
+            _mesh.SetNormals(normals);
         }
 
         private void SetUV()
