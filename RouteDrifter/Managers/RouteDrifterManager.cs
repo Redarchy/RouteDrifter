@@ -17,12 +17,16 @@ namespace RouteDrifter.Managers
         private List<RouteComputer> _routeComputers = new List<RouteComputer>();
         private List<RouteFollower> _routeFollowers = new List<RouteFollower>();
 
-        private float _deltaTime = RouteDrifterDefinitions.DefaultDeltaTime;
+        private static float _deltaTime = RouteDrifterDefinitions.DefaultDeltaTime;
+        private static float _timeScale = 1f;
 
-        public float DeltaTime
+        public static float DeltaTime => _deltaTime * _timeScale;
+        public static float TimeScale => _timeScale;
+        
+        
+        public void SetTimeScale(float timeScale)
         {
-            get => _deltaTime;
-            set => _deltaTime = value;
+            _timeScale = timeScale;
         }
 
         public void EnableUpdate(bool update)
@@ -32,14 +36,14 @@ namespace RouteDrifter.Managers
 
         public void UpdateImmediately()
         {
-            UpdateRouteFollowers(_deltaTime);
+            UpdateRouteFollowers(DeltaTime);
         }
 
         private void Update()
         {
             if (_Update)
             {
-                UpdateRouteFollowers(_deltaTime);
+                UpdateRouteFollowers(DeltaTime);
             }
         }
 
