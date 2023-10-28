@@ -66,5 +66,10 @@ namespace RouteDrifter.Follower
         {
             _FaceDirection = faceDirection;
         }
+
+        public void SetOffset(Vector3 offset)
+        {
+            _OffsetByLocalDirection = offset;
+        }
     }
 }
