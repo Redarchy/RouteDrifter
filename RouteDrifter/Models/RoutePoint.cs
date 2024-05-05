@@ -1,3 +1,4 @@
+using Unity.Collections;
 using UnityEngine;
 
 namespace RouteDrifter.Models
@@ -5,18 +6,20 @@ namespace RouteDrifter.Models
     [System.Serializable]
     public struct RoutePoint
     {
-        [SerializeField] public Vector3 _Position;
-        [SerializeField] public Vector3 _Tangent;
+        [SerializeField, ReadOnly] public int Index;
+        [SerializeField] public Vector3 Position;
+        [SerializeField] public Vector3 Tangent;
         
-        public RoutePoint(Vector3 position, Vector3 tangent) 
+        public RoutePoint(int index, Vector3 position, Vector3 tangent)
         {
-            _Position = position;
-            _Tangent = tangent;
+            Index = index;
+            Position = position;
+            Tangent = tangent;
         }
         
         public RoutePoint SetTangentsDefault()
         {
-            _Tangent = new Vector3(-1, 0, 1);
+            Tangent = new Vector3(-1, 0, 1);
             return this;
         }
     }

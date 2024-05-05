@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using RouteDrifter.Computer;
 using RouteDrifter.Models;
+using RouteDrifter.Nodes;
 using RouteDrifter.Utility.Extensions;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace RouteDrifter.Follower
 {
@@ -26,6 +29,7 @@ namespace RouteDrifter.Follower
         
         public Action OnReachedEnd;
         public Action<float> OnPositionUpdate;
+        public Action<List<RouteNodeConnection>> OnNode;
 
         #endregion
 
@@ -46,13 +50,29 @@ namespace RouteDrifter.Follower
             {
                 return;
             }
+
+            var latestPercentage = _CurrentPercentage;
             
             UpdateCurrentPercentage(updateTime);
             CalculateTransformValues();
             UpdateTransform();
             CheckForReachEnd();
+            CheckForNode(latestPercentage);
             
             OnPositionUpdate?.Invoke(_CurrentPercentage);
+        }
+
+        private void CheckForNode(float percentageBeforeUpdate)
+        {
+            var nodeConnections = ListPool<RouteNodeConnection>.Get();
+            
+            if (_RouteComputer.TryGetNodeConnectionsNonAlloc(percentageBeforeUpdate, _CurrentPercentage, nodeConnections))
+            {
+                OnNode?.Invoke(nodeConnections);
+            }
+            
+            nodeConnections.Clear();
+            ListPool<RouteNodeConnection>.Release(nodeConnections);
         }
 
         private void UpdateCurrentPercentage(float updateTime)
@@ -64,9 +84,9 @@ namespace RouteDrifter.Follower
         
         private void CalculateTransformValues()
         {
-            var samplePoint = _RouteComputer.GetSamplePointAtPercentage(_CurrentPercentage);
-            _Position = _RouteComputer.TransformLocalPointToWorldPoint(samplePoint._LocalPosition);
-            _Rotation = Quaternion.LookRotation(samplePoint._Forward);
+            var samplePoint = _RouteComputer.GetLerpedSamplePointAtPercentage(_CurrentPercentage);
+            _Position = _RouteComputer.TransformLocalPointToWorldPoint(samplePoint.LocalPosition);
+            _Rotation = Quaternion.LookRotation(samplePoint.Forward);
         }
 
         private void CheckForReachEnd()

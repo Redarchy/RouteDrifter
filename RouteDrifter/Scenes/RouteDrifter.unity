@@ -123,6 +123,236 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &104911371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 104911373}
+  - component: {fileID: 104911372}
+  m_Layer: 0
+  m_Name: RouteComputer (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &104911372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104911371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744d562c203f43e69e49fb9ef8b1623d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _RoutePoints:
+  - Index: 0
+    Position: {x: 0, y: 0, z: 0}
+    Tangent: {x: 0, y: 0, z: 0}
+  - Index: 1
+    Position: {x: 1, y: 0, z: 0}
+    Tangent: {x: 0, y: 0, z: 0}
+  - Index: 2
+    Position: {x: 2, y: 0, z: 0}
+    Tangent: {x: 0, y: 0, z: 0}
+  _BuildOnAwake: 1
+  _SampleSpacing: 0.05
+  _SampleResolution: 0.005
+  _Length: 1.9999992
+  _ThisTransform: {fileID: 104911373}
+  _BezierCurves: []
+  _SamplePoints:
+  - LocalPosition: {x: 0, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0
+  - LocalPosition: {x: 0.05, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.025000012
+  - LocalPosition: {x: 0.1, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.050000023
+  - LocalPosition: {x: 0.15, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.07500003
+  - LocalPosition: {x: 0.2, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.10000004
+  - LocalPosition: {x: 0.25, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.12500004
+  - LocalPosition: {x: 0.3, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.15000007
+  - LocalPosition: {x: 0.35000002, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.17500009
+  - LocalPosition: {x: 0.40000004, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.2000001
+  - LocalPosition: {x: 0.45000005, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.22500013
+  - LocalPosition: {x: 0.50000006, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.25000015
+  - LocalPosition: {x: 0.5500001, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.27500015
+  - LocalPosition: {x: 0.6000001, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.30000016
+  - LocalPosition: {x: 0.6500001, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.32500017
+  - LocalPosition: {x: 0.7000001, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.35000017
+  - LocalPosition: {x: 0.7500001, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.37500018
+  - LocalPosition: {x: 0.80000013, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.40000018
+  - LocalPosition: {x: 0.85000014, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.4250002
+  - LocalPosition: {x: 0.90000015, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.4500002
+  - LocalPosition: {x: 0.95000017, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.4750002
+  - LocalPosition: {x: 1.0000001, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.5000002
+  - LocalPosition: {x: 1.0500001, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.52500015
+  - LocalPosition: {x: 1.1, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.55000013
+  - LocalPosition: {x: 1.15, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.5750001
+  - LocalPosition: {x: 1.1999999, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.6000001
+  - LocalPosition: {x: 1.2499999, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.62500006
+  - LocalPosition: {x: 1.2999998, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.65000004
+  - LocalPosition: {x: 1.3499998, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.675
+  - LocalPosition: {x: 1.3999997, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.7
+  - LocalPosition: {x: 1.4499997, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.72499996
+  - LocalPosition: {x: 1.4999996, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.74999994
+  - LocalPosition: {x: 1.5499996, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.7749999
+  - LocalPosition: {x: 1.5999995, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.7999999
+  - LocalPosition: {x: 1.6499995, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.82499987
+  - LocalPosition: {x: 1.6999995, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.84999985
+  - LocalPosition: {x: 1.7499994, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.8749998
+  - LocalPosition: {x: 1.7999994, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.8999998
+  - LocalPosition: {x: 1.8499993, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.9249998
+  - LocalPosition: {x: 1.8999993, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.94999975
+  - LocalPosition: {x: 1.9499992, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.9749997
+  - LocalPosition: {x: 1.9999992, y: 0, z: 0}
+    Forward: {x: 1, y: 0, z: 0}
+    Percentage: 0.9999997
+  _NodeConnections: []
+--- !u!4 &104911373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 104911371}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &127234727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 127234729}
+  - component: {fileID: 127234728}
+  m_Layer: 0
+  m_Name: RouteDrifterNode
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &127234728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127234727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5608105e60f547ce87307de5a9008d88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Connections: []
+--- !u!4 &127234729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127234727}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 0, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,17 +674,359 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _RoutePoints:
-  - _Position: {x: 0, y: 0, z: 0}
-    _Tangent: {x: -0.27966416, y: 0, z: 0.87}
-  - _Position: {x: 1, y: 0, z: 0}
-    _Tangent: {x: -0.15416873, y: 0, z: 0.21681684}
-  - _Position: {x: 2, y: 0, z: 0}
-    _Tangent: {x: 0, y: 0, z: -1.3671598}
+  - Index: 0
+    Position: {x: 0, y: 0, z: 0}
+    Tangent: {x: 0, y: 0, z: 1}
+  - Index: 1
+    Position: {x: 1, y: 0, z: -2}
+    Tangent: {x: 0, y: 0, z: 1}
+  - Index: 2
+    Position: {x: 2, y: 0, z: 0}
+    Tangent: {x: 0, y: 0, z: -0.64}
   _BuildOnAwake: 1
   _SampleSpacing: 0.05
   _SampleResolution: 0.005
-  _Length: 3.2999988
+  _Length: 5.5500045
   _ThisTransform: {fileID: 1375272598}
+  _BezierCurves: []
+  _SamplePoints:
+  - LocalPosition: {x: 0, y: 0, z: 0}
+    Forward: {x: 0.020976385, y: 0, z: 0.99978}
+    Percentage: 0
+  - LocalPosition: {x: 0.0010488193, y: 0, z: 0.049989}
+    Forward: {x: 0.06471772, y: 0, z: 0.99790365}
+    Percentage: 0.009009002
+  - LocalPosition: {x: 0.004284705, y: 0, z: 0.09988418}
+    Forward: {x: 0.13354364, y: 0, z: 0.9910429}
+    Percentage: 0.018018004
+  - LocalPosition: {x: 0.0109618865, y: 0, z: 0.14943632}
+    Forward: {x: 0.22865663, y: 0, z: 0.97350717}
+    Percentage: 0.027027003
+  - LocalPosition: {x: 0.022394719, y: 0, z: 0.19811168}
+    Forward: {x: 0.4416363, y: 0, z: 0.8971942}
+    Percentage: 0.036036007
+  - LocalPosition: {x: 0.04447653, y: 0, z: 0.24297139}
+    Forward: {x: 0.8190913, y: 0, z: 0.5736632}
+    Percentage: 0.045045007
+  - LocalPosition: {x: 0.08543109, y: 0, z: 0.27165455}
+    Forward: {x: 0.9773025, y: 0, z: -0.21184859}
+    Percentage: 0.054054007
+  - LocalPosition: {x: 0.13429622, y: 0, z: 0.26106212}
+    Forward: {x: 0.845615, y: 0, z: -0.53379333}
+    Percentage: 0.06306301
+  - LocalPosition: {x: 0.17657697, y: 0, z: 0.23437245}
+    Forward: {x: 0.73497164, y: 0, z: -0.6780978}
+    Percentage: 0.072072014
+  - LocalPosition: {x: 0.21332556, y: 0, z: 0.20046756}
+    Forward: {x: 0.6688714, y: 0, z: -0.7433781}
+    Percentage: 0.08108102
+  - LocalPosition: {x: 0.24676913, y: 0, z: 0.16329865}
+    Forward: {x: 0.619735, y: 0, z: -0.7848111}
+    Percentage: 0.09009002
+  - LocalPosition: {x: 0.2777559, y: 0, z: 0.12405809}
+    Forward: {x: 0.5877864, y: 0, z: -0.80901617}
+    Percentage: 0.099099025
+  - LocalPosition: {x: 0.3071452, y: 0, z: 0.08360728}
+    Forward: {x: 0.5592931, y: 0, z: -0.82896996}
+    Percentage: 0.10810803
+  - LocalPosition: {x: 0.33510986, y: 0, z: 0.042158782}
+    Forward: {x: 0.5359972, y: 0, z: -0.84421974}
+    Percentage: 0.11711703
+  - LocalPosition: {x: 0.36190972, y: 0, z: -0.000052200165}
+    Forward: {x: 0.5192233, y: 0, z: -0.85463864}
+    Percentage: 0.12612604
+  - LocalPosition: {x: 0.38787088, y: 0, z: -0.042784125}
+    Forward: {x: 0.49956086, y: 0, z: -0.86627877}
+    Percentage: 0.13513504
+  - LocalPosition: {x: 0.41284892, y: 0, z: -0.08609806}
+    Forward: {x: 0.48673686, y: 0, z: -0.8735486}
+    Percentage: 0.14414404
+  - LocalPosition: {x: 0.43718576, y: 0, z: -0.1297755}
+    Forward: {x: 0.47338417, y: 0, z: -0.8808561}
+    Percentage: 0.15315305
+  - LocalPosition: {x: 0.46085498, y: 0, z: -0.1738183}
+    Forward: {x: 0.46096987, y: 0, z: -0.8874158}
+    Percentage: 0.16216205
+  - LocalPosition: {x: 0.48390347, y: 0, z: -0.21818909}
+    Forward: {x: 0.44955358, y: 0, z: -0.8932534}
+    Percentage: 0.17117105
+  - LocalPosition: {x: 0.50638115, y: 0, z: -0.26285177}
+    Forward: {x: 0.43893355, y: 0, z: -0.8985196}
+    Percentage: 0.18018006
+  - LocalPosition: {x: 0.5283278, y: 0, z: -0.30777773}
+    Forward: {x: 0.4289365, y: 0, z: -0.9033347}
+    Percentage: 0.18918906
+  - LocalPosition: {x: 0.54977465, y: 0, z: -0.35294446}
+    Forward: {x: 0.41942722, y: 0, z: -0.907789}
+    Percentage: 0.19819807
+  - LocalPosition: {x: 0.570746, y: 0, z: -0.3983339}
+    Forward: {x: 0.41030654, y: 0, z: -0.91194767}
+    Percentage: 0.20720707
+  - LocalPosition: {x: 0.5912613, y: 0, z: -0.44393128}
+    Forward: {x: 0.40343767, y: 0, z: -0.9150071}
+    Percentage: 0.21621607
+  - LocalPosition: {x: 0.6114332, y: 0, z: -0.48968163}
+    Forward: {x: 0.39317858, y: 0, z: -0.9194621}
+    Percentage: 0.22522508
+  - LocalPosition: {x: 0.63109213, y: 0, z: -0.5356547}
+    Forward: {x: 0.38479915, y: 0, z: -0.92300034}
+    Percentage: 0.23423408
+  - LocalPosition: {x: 0.6503321, y: 0, z: -0.58180475}
+    Forward: {x: 0.37839758, y: 0, z: -0.92564315}
+    Percentage: 0.24324308
+  - LocalPosition: {x: 0.669252, y: 0, z: -0.6280869}
+    Forward: {x: 0.36876905, y: 0, z: -0.929521}
+    Percentage: 0.2522521
+  - LocalPosition: {x: 0.68769044, y: 0, z: -0.674563}
+    Forward: {x: 0.36068308, y: 0, z: -0.9326884}
+    Percentage: 0.2612611
+  - LocalPosition: {x: 0.7057246, y: 0, z: -0.7211974}
+    Forward: {x: 0.35448775, y: 0, z: -0.9350606}
+    Percentage: 0.2702701
+  - LocalPosition: {x: 0.723449, y: 0, z: -0.7679505}
+    Forward: {x: 0.34503722, y: 0, z: -0.938589}
+    Percentage: 0.2792791
+  - LocalPosition: {x: 0.74070084, y: 0, z: -0.8148799}
+    Forward: {x: 0.33868545, y: 0, z: -0.94089967}
+    Percentage: 0.28828812
+  - LocalPosition: {x: 0.7576351, y: 0, z: -0.8619249}
+    Forward: {x: 0.32908428, y: 0, z: -0.94430053}
+    Percentage: 0.29729712
+  - LocalPosition: {x: 0.77408934, y: 0, z: -0.90913993}
+    Forward: {x: 0.3226007, y: 0, z: -0.9465351}
+    Percentage: 0.30630612
+  - LocalPosition: {x: 0.79021937, y: 0, z: -0.9564667}
+    Forward: {x: 0.31273696, y: 0, z: -0.9498398}
+    Percentage: 0.31531513
+  - LocalPosition: {x: 0.8058562, y: 0, z: -1.0039587}
+    Forward: {x: 0.30411607, y: 0, z: -0.952635}
+    Percentage: 0.32432413
+  - LocalPosition: {x: 0.821062, y: 0, z: -1.0515904}
+    Forward: {x: 0.2973911, y: 0, z: -0.9547557}
+    Percentage: 0.33333313
+  - LocalPosition: {x: 0.8359316, y: 0, z: -1.0993283}
+    Forward: {x: 0.28687692, y: 0, z: -0.95796746}
+    Percentage: 0.34234214
+  - LocalPosition: {x: 0.85027546, y: 0, z: -1.1472267}
+    Forward: {x: 0.27959117, y: 0, z: -0.9601191}
+    Percentage: 0.35135114
+  - LocalPosition: {x: 0.864255, y: 0, z: -1.1952326}
+    Forward: {x: 0.26830697, y: 0, z: -0.9633335}
+    Percentage: 0.36036015
+  - LocalPosition: {x: 0.87767035, y: 0, z: -1.2433993}
+    Forward: {x: 0.26046184, y: 0, z: -0.9654842}
+    Percentage: 0.36936915
+  - LocalPosition: {x: 0.8906934, y: 0, z: -1.2916734}
+    Forward: {x: 0.248226, y: 0, z: -0.96870214}
+    Percentage: 0.37837815
+  - LocalPosition: {x: 0.9031047, y: 0, z: -1.3401085}
+    Forward: {x: 0.23722057, y: 0, z: -0.97145575}
+    Percentage: 0.38738716
+  - LocalPosition: {x: 0.91496575, y: 0, z: -1.3886813}
+    Forward: {x: 0.22841078, y: 0, z: -0.97356486}
+    Percentage: 0.39639616
+  - LocalPosition: {x: 0.9263863, y: 0, z: -1.4373596}
+    Forward: {x: 0.21427143, y: 0, z: -0.97677416}
+    Percentage: 0.40540516
+  - LocalPosition: {x: 0.9370999, y: 0, z: -1.4861983}
+    Forward: {x: 0.201299, y: 0, z: -0.97952986}
+    Percentage: 0.41441417
+  - LocalPosition: {x: 0.94716483, y: 0, z: -1.5351748}
+    Forward: {x: 0.19079307, y: 0, z: -0.98163027}
+    Percentage: 0.42342317
+  - LocalPosition: {x: 0.9567045, y: 0, z: -1.5842564}
+    Forward: {x: 0.1736568, y: 0, z: -0.98480624}
+    Percentage: 0.43243217
+  - LocalPosition: {x: 0.96538734, y: 0, z: -1.6334968}
+    Forward: {x: 0.15791059, y: 0, z: -0.98745346}
+    Percentage: 0.44144118
+  - LocalPosition: {x: 0.9732829, y: 0, z: -1.6828694}
+    Forward: {x: 0.14098057, y: 0, z: -0.99001235}
+    Percentage: 0.45045018
+  - LocalPosition: {x: 0.9803319, y: 0, z: -1.73237}
+    Forward: {x: 0.12260556, y: 0, z: -0.9924555}
+    Percentage: 0.4594592
+  - LocalPosition: {x: 0.9864622, y: 0, z: -1.7819928}
+    Forward: {x: 0.1025248, y: 0, z: -0.9947304}
+    Percentage: 0.4684682
+  - LocalPosition: {x: 0.9915884, y: 0, z: -1.8317293}
+    Forward: {x: 0.080424495, y: 0, z: -0.9967607}
+    Percentage: 0.4774772
+  - LocalPosition: {x: 0.99560964, y: 0, z: -1.8815674}
+    Forward: {x: 0.05590445, y: 0, z: -0.9984361}
+    Percentage: 0.4864862
+  - LocalPosition: {x: 0.99840486, y: 0, z: -1.9314891}
+    Forward: {x: 0.028442126, y: 0, z: -0.99959546}
+    Percentage: 0.4954952
+  - LocalPosition: {x: 0.99982697, y: 0, z: -1.9814689}
+    Forward: {x: 0.013726979, y: 0, z: -0.99990577}
+    Percentage: 0.5045042
+  - LocalPosition: {x: 1.0005133, y: 0, z: -2.031464}
+    Forward: {x: 0.050029654, y: 0, z: -0.9987477}
+    Percentage: 0.5135132
+  - LocalPosition: {x: 1.0030148, y: 0, z: -2.0814016}
+    Forward: {x: 0.105564795, y: 0, z: -0.9944124}
+    Percentage: 0.5225222
+  - LocalPosition: {x: 1.008293, y: 0, z: -2.131122}
+    Forward: {x: 0.21892077, y: 0, z: -0.97574264}
+    Percentage: 0.5315312
+  - LocalPosition: {x: 1.0192391, y: 0, z: -2.1799092}
+    Forward: {x: 0.4468111, y: 0, z: -0.89462835}
+    Percentage: 0.5405402
+  - LocalPosition: {x: 1.0415796, y: 0, z: -2.2246406}
+    Forward: {x: 0.9402635, y: 0, z: -0.34044752}
+    Percentage: 0.5495492
+  - LocalPosition: {x: 1.0885928, y: 0, z: -2.241663}
+    Forward: {x: 0.892862, y: 0, z: 0.45033035}
+    Percentage: 0.5585582
+  - LocalPosition: {x: 1.1332358, y: 0, z: -2.2191465}
+    Forward: {x: 0.73161, y: 0, z: 0.68172336}
+    Percentage: 0.5675672
+  - LocalPosition: {x: 1.1698164, y: 0, z: -2.1850603}
+    Forward: {x: 0.6549232, y: 0, z: 0.75569546}
+    Percentage: 0.57657623
+  - LocalPosition: {x: 1.2025626, y: 0, z: -2.1472754}
+    Forward: {x: 0.59809786, y: 0, z: 0.80142313}
+    Percentage: 0.58558524
+  - LocalPosition: {x: 1.2324675, y: 0, z: -2.1072042}
+    Forward: {x: 0.5643374, y: 0, z: 0.82554424}
+    Percentage: 0.59459424
+  - LocalPosition: {x: 1.2606844, y: 0, z: -2.065927}
+    Forward: {x: 0.53581476, y: 0, z: 0.84433556}
+    Percentage: 0.60360324
+  - LocalPosition: {x: 1.2874751, y: 0, z: -2.0237103}
+    Forward: {x: 0.5137063, y: 0, z: 0.8579661}
+    Percentage: 0.61261225
+  - LocalPosition: {x: 1.3131604, y: 0, z: -1.980812}
+    Forward: {x: 0.49568182, y: 0, z: 0.86850417}
+    Percentage: 0.62162125
+  - LocalPosition: {x: 1.3379445, y: 0, z: -1.9373868}
+    Forward: {x: 0.48282623, y: 0, z: 0.8757162}
+    Percentage: 0.63063025
+  - LocalPosition: {x: 1.3620858, y: 0, z: -1.893601}
+    Forward: {x: 0.46986306, y: 0, z: 0.88273937}
+    Percentage: 0.63963926
+  - LocalPosition: {x: 1.385579, y: 0, z: -1.8494639}
+    Forward: {x: 0.45816144, y: 0, z: 0.88886905}
+    Percentage: 0.64864826
+  - LocalPosition: {x: 1.4084871, y: 0, z: -1.8050205}
+    Forward: {x: 0.44777617, y: 0, z: 0.89414567}
+    Percentage: 0.65765727
+  - LocalPosition: {x: 1.4308759, y: 0, z: -1.7603132}
+    Forward: {x: 0.43843266, y: 0, z: 0.8987641}
+    Percentage: 0.66666627
+  - LocalPosition: {x: 1.4527975, y: 0, z: -1.715375}
+    Forward: {x: 0.42989478, y: 0, z: 0.90287894}
+    Percentage: 0.6756753
+  - LocalPosition: {x: 1.4742923, y: 0, z: -1.670231}
+    Forward: {x: 0.42198896, y: 0, z: 0.90660095}
+    Percentage: 0.6846843
+  - LocalPosition: {x: 1.4953917, y: 0, z: -1.6249009}
+    Forward: {x: 0.41458794, y: 0, z: 0.91000926}
+    Percentage: 0.6936933
+  - LocalPosition: {x: 1.5161211, y: 0, z: -1.5794004}
+    Forward: {x: 0.40914962, y: 0, z: 0.91246736}
+    Percentage: 0.7027023
+  - LocalPosition: {x: 1.5365787, y: 0, z: -1.533777}
+    Forward: {x: 0.40116027, y: 0, z: 0.91600794}
+    Percentage: 0.7117113
+  - LocalPosition: {x: 1.5566367, y: 0, z: -1.4879766}
+    Forward: {x: 0.39475158, y: 0, z: 0.9187879}
+    Percentage: 0.7207203
+  - LocalPosition: {x: 1.5763743, y: 0, z: -1.4420371}
+    Forward: {x: 0.38997644, y: 0, z: 0.9208248}
+    Percentage: 0.7297293
+  - LocalPosition: {x: 1.5958731, y: 0, z: -1.3959959}
+    Forward: {x: 0.3828957, y: 0, z: 0.9237915}
+    Percentage: 0.7387383
+  - LocalPosition: {x: 1.6150179, y: 0, z: -1.3498063}
+    Forward: {x: 0.37701628, y: 0, z: 0.92620665}
+    Percentage: 0.7477473
+  - LocalPosition: {x: 1.6338687, y: 0, z: -1.303496}
+    Forward: {x: 0.37261534, y: 0, z: 0.92798585}
+    Percentage: 0.7567563
+  - LocalPosition: {x: 1.6524994, y: 0, z: -1.2570968}
+    Forward: {x: 0.36597228, y: 0, z: 0.93062574}
+    Percentage: 0.7657653
+  - LocalPosition: {x: 1.6707981, y: 0, z: -1.2105654}
+    Forward: {x: 0.36155695, y: 0, z: 0.93235}
+    Percentage: 0.7747743
+  - LocalPosition: {x: 1.6888759, y: 0, z: -1.1639479}
+    Forward: {x: 0.3549506, y: 0, z: 0.934885}
+    Percentage: 0.7837833
+  - LocalPosition: {x: 1.7066234, y: 0, z: -1.1172037}
+    Forward: {x: 0.35053235, y: 0, z: 0.9365506}
+    Percentage: 0.7927923
+  - LocalPosition: {x: 1.7241501, y: 0, z: -1.0703762}
+    Forward: {x: 0.3438642, y: 0, z: 0.93901944}
+    Percentage: 0.8018013
+  - LocalPosition: {x: 1.7413433, y: 0, z: -1.0234252}
+    Forward: {x: 0.33935097, y: 0, z: 0.9406598}
+    Percentage: 0.8108103
+  - LocalPosition: {x: 1.7583108, y: 0, z: -0.97639227}
+    Forward: {x: 0.33247465, y: 0, z: 0.9431122}
+    Percentage: 0.81981933
+  - LocalPosition: {x: 1.7749345, y: 0, z: -0.92923665}
+    Forward: {x: 0.32645467, y: 0, z: 0.9452129}
+    Percentage: 0.82882833
+  - LocalPosition: {x: 1.7912573, y: 0, z: -0.881976}
+    Forward: {x: 0.32171026, y: 0, z: 0.94683814}
+    Percentage: 0.83783734
+  - LocalPosition: {x: 1.8073428, y: 0, z: -0.8346341}
+    Forward: {x: 0.3142358, y: 0, z: 0.949345}
+    Percentage: 0.84684634
+  - LocalPosition: {x: 1.8230546, y: 0, z: -0.7871669}
+    Forward: {x: 0.30749795, y: 0, z: 0.95154876}
+    Percentage: 0.85585535
+  - LocalPosition: {x: 1.8384295, y: 0, z: -0.73958945}
+    Forward: {x: 0.30215016, y: 0, z: 0.95326036}
+    Percentage: 0.86486435
+  - LocalPosition: {x: 1.853537, y: 0, z: -0.6919264}
+    Forward: {x: 0.29353628, y: 0, z: 0.95594794}
+    Percentage: 0.87387335
+  - LocalPosition: {x: 1.8682138, y: 0, z: -0.64412904}
+    Forward: {x: 0.28563738, y: 0, z: 0.9583378}
+    Percentage: 0.88288236
+  - LocalPosition: {x: 1.8824956, y: 0, z: -0.59621215}
+    Forward: {x: 0.27727363, y: 0, z: 0.96079105}
+    Percentage: 0.89189136
+  - LocalPosition: {x: 1.8963593, y: 0, z: -0.5481726}
+    Forward: {x: 0.27034286, y: 0, z: 0.9627641}
+    Percentage: 0.90090036
+  - LocalPosition: {x: 1.9098765, y: 0, z: -0.5000344}
+    Forward: {x: 0.25871995, y: 0, z: 0.9659524}
+    Percentage: 0.90990937
+  - LocalPosition: {x: 1.9228125, y: 0, z: -0.45173678}
+    Forward: {x: 0.24790291, y: 0, z: 0.96878487}
+    Percentage: 0.9189184
+  - LocalPosition: {x: 1.9352076, y: 0, z: -0.40329754}
+    Forward: {x: 0.23373841, y: 0, z: 0.9722995}
+    Percentage: 0.9279274
+  - LocalPosition: {x: 1.9468945, y: 0, z: -0.35468256}
+    Forward: {x: 0.22174355, y: 0, z: 0.975105}
+    Percentage: 0.9369364
+  - LocalPosition: {x: 1.9579817, y: 0, z: -0.3059273}
+    Forward: {x: 0.20659682, y: 0, z: 0.97842616}
+    Percentage: 0.9459454
+  - LocalPosition: {x: 1.9683115, y: 0, z: -0.257006}
+    Forward: {x: 0.18521784, y: 0, z: 0.98269755}
+    Percentage: 0.9549544
+  - LocalPosition: {x: 1.9775724, y: 0, z: -0.20787111}
+    Forward: {x: 0.16616817, y: 0, z: 0.98609746}
+    Percentage: 0.9639634
+  - LocalPosition: {x: 1.9858809, y: 0, z: -0.15856622}
+    Forward: {x: 0.13530731, y: 0, z: 0.99080366}
+    Percentage: 0.9729724
+  - LocalPosition: {x: 1.9926462, y: 0, z: -0.10902604}
+    Forward: {x: 0.09476899, y: 0, z: 0.9954993}
+    Percentage: 0.9819814
+  - LocalPosition: {x: 1.9973847, y: 0, z: -0.059251066}
+    Forward: {x: 0.0440979, y: 0, z: 0.9990272}
+    Percentage: 0.9909904
+  - LocalPosition: {x: 1.9995896, y: 0, z: -0.009299706}
+    Forward: {x: 0.0440979, y: 0, z: 0.9990272}
+    Percentage: 0.9999994
+  _NodeConnections: []
 --- !u!1 &1532808974
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +1070,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1553668479
 GameObject:
@@ -510,6 +1082,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1553668481}
   - component: {fileID: 1553668480}
+  - component: {fileID: 1553668482}
   m_Layer: 0
   m_Name: RouteFollower
   m_TagString: Untagged
@@ -530,13 +1103,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _RouteComputer: {fileID: 1375272599}
-  _CurrentPercentage: 1
+  _CurrentPercentage: 0
   _Follow: 0
   _FaceDirection: 1
   _MovementType: 0
   _LinearSpeed: 0.01
   _OffsetByLocalDirection: {x: 0, y: 0, z: 0}
-  _DistanceTraveled: 3.2999988
+  _DistanceTraveled: 0
 --- !u!4 &1553668481
 Transform:
   m_ObjectHideFlags: 0
@@ -544,15 +1117,28 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553668479}
-  m_LocalRotation: {x: 0, y: 0.009153273, z: 0, w: 0.9999581}
-  m_LocalPosition: {x: 1.9998517, y: 0, z: -0.024971614}
+  m_LocalRotation: {x: 0, y: 0.01048877, z: 0, w: 0.999945}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 997090235}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1553668482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553668479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8d32bbccaf466f9b9b926504bb1309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Follower: {fileID: 1553668480}
 --- !u!1 &1751781689
 GameObject:
   m_ObjectHideFlags: 0

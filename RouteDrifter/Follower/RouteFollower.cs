@@ -11,7 +11,7 @@ namespace RouteDrifter.Follower
     [DefaultExecutionOrder(-98)]
     public class RouteFollower : RouteFollowerContainer, IRouteGizmosDrawable
     {
-        public bool Follow { get => _Follow; set => _Follow = value; }
+        public bool Follow { get => _Follow; set => _Follow = _RouteComputer != null && value; }
         
         private void Awake()
         {

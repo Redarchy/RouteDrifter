@@ -3,6 +3,7 @@ using RouteDrifter.Computer;
 using RouteDrifter.Models;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace RouteDrifter.Editor
 {
@@ -14,8 +15,6 @@ namespace RouteDrifter.Editor
         private List<RoutePoint> _routePoints;
         private List<RouteBezierCurve> _routeBezierCurves;
         
-#if UNITY_EDITOR 
-        
         private void OnEnable()
         {
             _routeComputer = (RouteComputer) target;
@@ -24,12 +23,30 @@ namespace RouteDrifter.Editor
             _routeBezierCurves = _routeContainer.BezierCurves;
         }
 
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            if (GUILayout.Button("Rebuild"))
+            {
+                _routeComputer.Build();
+            }
+
+            if (GUILayout.Button("Set Tangents Default"))
+            {
+                var routePointCount = _routePoints.Count;
+                for (var i = 0; i < routePointCount; i++)
+                {
+                    _routePoints[i] = _routePoints[i].SetTangentsDefault();
+                }
+            }
+        }
+
         private void OnSceneGUI()
         {
             Draw();
         }
-
-#endif
+        
         private void Draw()
         {
             DrawHandles();
@@ -58,12 +75,12 @@ namespace RouteDrifter.Editor
                 Handles.color = Color.white;
                 SamplePoint samplePoint = evenlySpacedSamplePoints[samplePointIndex];
 
-                Vector3 worldPoint = _routeContainer.TransformLocalPointToWorldPoint(samplePoint._LocalPosition);
+                Vector3 worldPoint = _routeContainer.TransformLocalPointToWorldPoint(samplePoint.LocalPosition);
 
-                Vector3 rotatedLeft = (Quaternion.AngleAxis(-90, Vector3.up) * samplePoint._Forward).normalized;
+                Vector3 rotatedLeft = (Quaternion.AngleAxis(-90, Vector3.up) * samplePoint.Forward).normalized;
                 rotatedLeft = worldPoint + rotatedLeft * sampleLength;
                      
-                Vector3 rotatedRight = (Quaternion.AngleAxis(90, Vector3.up) * samplePoint._Forward).normalized;
+                Vector3 rotatedRight = (Quaternion.AngleAxis(90, Vector3.up) * samplePoint.Forward).normalized;
                 rotatedRight = worldPoint + rotatedRight * sampleLength;
                     
                 Handles.DrawLine(rotatedLeft, rotatedRight);
@@ -80,7 +97,7 @@ namespace RouteDrifter.Editor
                 // Draw SamplePoint Forward
                 float forwardLength = sampleLength - 0.12f;
                 Handles.color = Color.blue;
-                Handles.DrawLine(worldPoint, worldPoint + samplePoint._Forward * forwardLength, 3f);
+                Handles.DrawLine(worldPoint, worldPoint + samplePoint.Forward * forwardLength, 3f);
             }
         }
 
@@ -92,23 +109,23 @@ namespace RouteDrifter.Editor
                 RoutePoint routePoint = _routeContainer.FromLocalToWorldRoutePointByIndex(i);
                 
                 // Route Point Position Handle
-                Vector3 newPosition = Handles.PositionHandle(routePoint._Position, Quaternion.identity);
+                Vector3 newPosition = Handles.PositionHandle(routePoint.Position, Quaternion.identity);
                 
-                if (routePoint._Position != newPosition)
+                if (routePoint.Position != newPosition)
                 {
                     Undo.RecordObject(_routeComputer, "move point");
-                    routePoint._Position = newPosition;
+                    routePoint.Position = newPosition;
                     _routePoints[i] = _routeContainer.FromWorldToLocalRoutePoint(routePoint);
                     _routeComputer.Build();
                 }
                 
                 // Route Point Tangent Handle
-                Vector3 newTangent = Handles.PositionHandle(routePoint._Tangent, Quaternion.identity);
+                Vector3 newTangent = Handles.PositionHandle(routePoint.Tangent, Quaternion.identity);
                 
-                if (routePoint._Tangent != newTangent)
+                if (routePoint.Tangent != newTangent)
                 {
                     Undo.RecordObject(_routeComputer, "move tangent");
-                    routePoint._Tangent = newTangent;
+                    routePoint.Tangent = newTangent;
                     _routePoints[i] = _routeContainer.FromWorldToLocalRoutePoint(routePoint);
                     _routeComputer.Build();
                 }
@@ -140,14 +157,14 @@ namespace RouteDrifter.Editor
                 
                 // Draw Point Indicators
                 Handles.color = Color.blue;
-                Handles.SphereHandleCap(0, routePoint._Position, Quaternion.identity, 0.15f, EventType.Repaint);
+                Handles.SphereHandleCap(0, routePoint.Position, Quaternion.identity, 0.15f, EventType.Repaint);
                 
                 // Draw Labels
                 style.normal.textColor = Color.white;
-                Handles.Label(routePoint._Position, $"Point : {i}", style);
+                Handles.Label(routePoint.Position, $"Point : {i}", style);
                 
                 style.normal.textColor = Color.white;
-                Handles.Label(routePoint._Tangent, $"Tangent", style);
+                Handles.Label(routePoint.Tangent, $"Tangent", style);
             }
 
             int bezierCurveCount = _routeBezierCurves.Count;

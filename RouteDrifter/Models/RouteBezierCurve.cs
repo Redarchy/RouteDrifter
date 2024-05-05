@@ -2,6 +2,7 @@
 
 namespace RouteDrifter.Models
 {
+    [System.Serializable]
     public class RouteBezierCurve
     {
         public RouteSegment RouteSegment => _routeSegment;
@@ -10,7 +11,7 @@ namespace RouteDrifter.Models
 
         public RouteBezierCurve(RoutePoint startPoint, RoutePoint endPoint)
         {
-            _routeSegment = new RouteSegment(startPoint._Position, endPoint._Position, startPoint._Tangent, endPoint._Tangent);
+            _routeSegment = new RouteSegment(startPoint.Position, endPoint.Position, startPoint.Tangent, endPoint.Tangent);
         }
         
         // Equations from: https://en.wikipedia.org/wiki/B%C3%A9zier_curve

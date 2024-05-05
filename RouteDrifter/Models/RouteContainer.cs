@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using RouteDrifter.Nodes;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace RouteDrifter.Models
 {
@@ -18,18 +20,19 @@ namespace RouteDrifter.Models
 
         #endregion
 
-        public List<SamplePoint> SamplePoints => _samplePoints;
+        [SerializeField, HideInInspector] private List<RouteBezierCurve> _BezierCurves;
+        [SerializeField] private List<SamplePoint> _SamplePoints;
+        [SerializeField] private List<RouteNodeConnection> _NodeConnections;
+        
+        public List<SamplePoint> SamplePoints => _SamplePoints;
         public List<RoutePoint> RoutePoints => _RoutePoints;
-        public List<RouteBezierCurve> BezierCurves => _bezierCurves;
+        public List<RouteBezierCurve> BezierCurves => _BezierCurves;
         public float Length => _Length;
-
-        private List<RouteBezierCurve> _bezierCurves = new List<RouteBezierCurve>();
-        private List<SamplePoint> _samplePoints = new List<SamplePoint>();
         public Transform Transform => _ThisTransform;
 
         protected virtual void Awake()
         {
-            Initialize();
+            InternalInitialize();
             
             if (_BuildOnAwake)
             {
@@ -37,21 +40,105 @@ namespace RouteDrifter.Models
             }
         }
 
-        protected virtual void Initialize()
+        protected virtual void InternalInitialize()
         {
             _ThisTransform = GetComponent<Transform>();
         }
         
+        #region Node Connections
+
+        public bool TryConnectNode(RouteNodeConnection connection)
+        {
+            if (_RoutePoints.Count <= connection.Point.Index)
+            {
+                return false;
+            }
+
+            foreach (var nodeConnection in _NodeConnections)
+            {
+                if (nodeConnection.Node == connection.Node)
+                {
+                    return false;
+                }
+
+                if (nodeConnection.Point.Index == connection.Point.Index)
+                {
+                    return false;
+                }
+            }
+            
+            _NodeConnections.Add(connection);
+            
+            return true;
+        }
+        
+        public void OnDisconnectedFromNode(RouteNodeConnection connection)
+        {
+            RouteNodeConnection removedConnection = null;
+
+            foreach (var nodeConnection in _NodeConnections)
+            {
+                if (nodeConnection.Computer == connection.Computer)
+                {
+                    if (nodeConnection.Point.Index == connection.Point.Index)
+                    {
+                        removedConnection = nodeConnection;
+                        break;
+                    }
+                }
+            }
+            
+            _NodeConnections.Remove(removedConnection);
+        }
+        
+        #endregion
+
+        #region Build
+
         public void Build()
         {
             UpdateBezierCurves();
             UpdateSamplePoints();
             UpdateLength();
+            UpdateSamplePointPercentages();
+            ValidateNodeConnections();
         }
-        
+
+        private void ValidateNodeConnections()
+        {
+            var invalidConnections = ListPool<RouteNodeConnection>.Get();
+            
+            foreach (var connection in _NodeConnections)
+            {
+                var isConnectionNull = connection == null || connection.Node == null;
+                var isPointMissing = _RoutePoints.Count <= connection.Point.Index;
+                var isConnectedWith = connection.Node.IsConnectedWith(connection);
+                
+                if (isConnectionNull || isPointMissing || !isConnectedWith)
+                {
+                    invalidConnections.Add(connection);
+                }
+            }
+
+            foreach (var connection in invalidConnections)
+            {
+                if (connection.Node != null)
+                {
+                    connection.Node.DisconnectComputer(connection.Computer);
+                }
+                else
+                {
+                    OnDisconnectedFromNode(connection);
+                }
+            }
+            
+            invalidConnections.Clear();
+            ListPool<RouteNodeConnection>.Release(invalidConnections);
+        }
+
         private void UpdateBezierCurves()
         {
-            _bezierCurves.Clear();
+            _BezierCurves.Clear();
             
             var curveCount = _RoutePoints.Count - 1;
 
@@ -60,33 +147,34 @@ namespace RouteDrifter.Models
                 return;
             }
             
-            for (int i = 0; i < curveCount; i++)
+            for (var i = 0; i < curveCount; i++)
             {
                 var startRoutePoint = _RoutePoints[i];
                 var endRoutePoint = _RoutePoints[i + 1];
 
                 if (i > 0)
                 {
-                    startRoutePoint._Tangent *= -1;
+                    startRoutePoint.Tangent *= -1;
                 }
 
                 var routeBezierCurve = new RouteBezierCurve(startRoutePoint, endRoutePoint);
-                _bezierCurves.Add(routeBezierCurve);
+                _BezierCurves.Add(routeBezierCurve);
             }
         }
 
         private void UpdateSamplePoints()
         {
-            if (_bezierCurves.Count <= 0)
+            if (_BezierCurves.Count <= 0)
             {
                 return;
             }
-            
-            var samplePoints = new List<SamplePoint>();
+
+            var samplePoints = _SamplePoints;
+            samplePoints.Clear();
 
             var firstSamplePoint = new SamplePoint
             {
-                _LocalPosition = _RoutePoints[0]._Position
+                LocalPosition = _RoutePoints[0].Position
             };
             
             samplePoints.Add(firstSamplePoint);
@@ -95,22 +183,22 @@ namespace RouteDrifter.Models
 
             #region Position Calculations
 
-            int bezierCurvesCount = _bezierCurves.Count;
-            for (int i = 0; i < bezierCurvesCount; i++)
+            var bezierCurvesCount = _BezierCurves.Count;
+            for (var i = 0; i < bezierCurvesCount; i++)
             {
-                float fraction = 0;
+                var fraction = 0f;
 
-                while (fraction <= 1)
+                while (fraction <= 1f)
                 {
                     fraction += _SampleResolution;
 
-                    var currentPoint = _bezierCurves[i].GetPointInCurveWithFraction(Mathf.Clamp01(fraction));
-                    var distanceSinceLastPoint = Vector3.Distance(previousSamplePoint._LocalPosition, currentPoint);
+                    var currentPoint = _BezierCurves[i].GetPointInCurveWithFraction(Mathf.Clamp01(fraction));
+                    var distanceSinceLastPoint = Vector3.Distance(previousSamplePoint.LocalPosition, currentPoint);
 
                     while (distanceSinceLastPoint >= _SampleSpacing)
                     {
                         var overshootDistance = distanceSinceLastPoint - _SampleSpacing;
-                        var newEvenlySpacedPoint = currentPoint + (previousSamplePoint._LocalPosition - currentPoint).normalized * overshootDistance;
+                        var newEvenlySpacedPoint = currentPoint + (previousSamplePoint.LocalPosition - currentPoint).normalized * overshootDistance;
                     
                         var newSamplePoint = new SamplePoint(newEvenlySpacedPoint, Vector3.zero);
                         samplePoints.Add(newSamplePoint);
@@ -125,51 +213,119 @@ namespace RouteDrifter.Models
 
             #region Forward Direction Calculations
 
-            int pointCount = samplePoints.Count;
+            var pointCount = samplePoints.Count;
 
             if (pointCount < 2)
             {
                 return;
             }
             
-            for (int i = 0; i < pointCount; i++)
+            for (var i = 0; i < pointCount; i++)
             {
                 var samplePoint = samplePoints[i];
                 
                 var forward = (i == pointCount - 1)
-                    ? samplePoints[i - 1]._Forward
-                    : (samplePoints[i + 1]._LocalPosition - samplePoint._LocalPosition).normalized;
+                    ? samplePoints[i - 1].Forward
+                    : (samplePoints[i + 1].LocalPosition - samplePoint.LocalPosition).normalized;
                 
-                samplePoint._Forward = forward;
+                samplePoint.Forward = forward;
                 samplePoints[i] = samplePoint;
             }
 
             #endregion
-            
-            _samplePoints = new List<SamplePoint>(samplePoints);
         }
 
+        private void UpdateSamplePointPercentages()
+        {
+            var samplePointCount = _SamplePoints.Count;
+
+            if (samplePointCount <= 0)
+            {
+                return;
+            }
+
+            var previousSamplePoint = _SamplePoints[0];
+            previousSamplePoint.Percentage = 0f;
+            _SamplePoints[0] = previousSamplePoint;
+
+            var length = _Length;
+            
+            for (var i = 1; i < samplePointCount; i++)
+            {
+                var samplePoint = _SamplePoints[i];
+                
+                var distanceToPrevious = Vector3.Distance(previousSamplePoint.LocalPosition, samplePoint.LocalPosition);
+                var lengthPercentage = distanceToPrevious / length;
+                samplePoint.Percentage = Mathf.Clamp01(previousSamplePoint.Percentage + lengthPercentage);
+
+                _SamplePoints[i] = samplePoint;
+                previousSamplePoint = samplePoint;
+            }
+        }
+        
         private void UpdateLength()
         {
             _Length = 0;
 
-            var sampleCount = _samplePoints.Count;
-            for (int i = 0; i < sampleCount - 1; i++)
+            var sampleCount = _SamplePoints.Count;
+            for (var i = 0; i < sampleCount - 1; i++)
             {
-                _Length += Vector3.Distance(_samplePoints[i]._LocalPosition, _samplePoints[i + 1]._LocalPosition);
+                _Length += Vector3.Distance(_SamplePoints[i].LocalPosition, _SamplePoints[i + 1].LocalPosition);
             }
         }
-        
+
+        #endregion
+
+        #region Helper Methods
+
         public Vector3 TransformLocalPointToWorldPoint(Vector3 localPoint)
         {
             return _ThisTransform.TransformPoint(localPoint);
+        }
+
+        public Vector3 TransformWorldPointToLocalPoint(Vector3 worldPoint)
+        {
+            return _ThisTransform.InverseTransformPoint(worldPoint);
+        }
+        
+        public void SetConnectedPointWorldPosition(RouteNodeConnection connection, Vector3 worldPosition)
+        {
+            if (!_NodeConnections.Contains(connection))
+            {
+                return;
+            }
+
+            var connectionPoint = connection.Point;
+            if (connectionPoint.Index >= _RoutePoints.Count)
+            {
+                return;
+            }
+
+            var routePoint = RoutePoints[connectionPoint.Index];
+            routePoint.Position = TransformWorldPointToLocalPoint(worldPosition);
+            _RoutePoints[connectionPoint.Index] = routePoint;
+            
+            Build();
+        }
+        
+        public bool TryGetNodeConnectionsNonAlloc(float startPercentage, float endPercentage, List<RouteNodeConnection> nodeConnections)
+        {
+            foreach (var connection in _NodeConnections)
+            {
+                if (startPercentage < connection.PercentageFractionOnComputer && connection.PercentageFractionOnComputer < endPercentage)
+                {
+                    nodeConnections.AddRange(connection.Node.Connections);
+                }
+            }
+
+            return nodeConnections.Count > 0;
         }
         
         public RoutePoint FromLocalToWorldRoutePointByIndex(int routePointIndex)
         {
             var routePoint = _RoutePoints[routePointIndex];
-            routePoint._Position = _ThisTransform.TransformPoint(routePoint._Position);
-            routePoint._Tangent += routePoint._Position;
+            routePoint.Position = _ThisTransform.TransformPoint(routePoint.Position);
+            routePoint.Tangent += routePoint.Position;
             
             return routePoint;
         }
@@ -178,8 +334,8 @@ namespace RouteDrifter.Models
         {
             var localRoutePoint = new RoutePoint
             {
-                _Position = _ThisTransform.InverseTransformPoint(worldRoutePoint._Position),
-                _Tangent = worldRoutePoint._Tangent - worldRoutePoint._Position
+                Position = _ThisTransform.InverseTransformPoint(worldRoutePoint.Position),
+                Tangent = worldRoutePoint.Tangent - worldRoutePoint.Position
             };
             
             return localRoutePoint;
@@ -187,7 +343,7 @@ namespace RouteDrifter.Models
         
         public RouteSegment WorldSegmentByIndex(int segmentIndex)
         {
-            var routeSegment = _bezierCurves[segmentIndex].RouteSegment;
+            var routeSegment = _BezierCurves[segmentIndex].RouteSegment;
             
             routeSegment._StartPosition = _ThisTransform.TransformPoint(routeSegment._StartPosition);
             routeSegment._EndPosition = _ThisTransform.TransformPoint(routeSegment._EndPosition);
@@ -197,12 +353,50 @@ namespace RouteDrifter.Models
 
             return routeSegment;
         }
+
+        #endregion
+
+        private void OnDestroy()
+        {
+            #region Remove Node Connections
         
+            // Use copy for not to modify the _NodeConnections list directly, to prevent IEnumeration error..
+            var connectionsCopy = ListPool<RouteNodeConnection>.Get();
+            
+            foreach (var connection in _NodeConnections)
+            {
+                connectionsCopy.Add(connection);
+            }
+        
+            foreach (var connection in connectionsCopy)
+            {
+                connection.Node.DisconnectComputer(connection.Computer);
+            }
+            
+            connectionsCopy.Clear();
+            ListPool<RouteNodeConnection>.Release(connectionsCopy);
+        
+            _NodeConnections.Clear();
+            
+            #endregion
+        }
+
 #if UNITY_EDITOR
         protected virtual void OnValidate()
         {
             _ThisTransform = GetComponent<Transform>();
+            SetRoutePointIndices();
             Build();
+        }
+
+        private void SetRoutePointIndices()
+        {
+            for (var index = 0; index < _RoutePoints.Count; index++)
+            {
+                var routePoint = _RoutePoints[index];
+                routePoint.Index = index;
+                _RoutePoints[index] = routePoint;
+            }
         }
 #endif
 

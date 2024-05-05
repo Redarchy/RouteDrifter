@@ -2,14 +2,58 @@ using System.Collections.Generic;
 using RouteDrifter.Computer;
 using RouteDrifter.Models;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace RouteDrifter.Utility.Extensions
 {
     public static class RouteComputerExtensions
     {
-        public static float GetClosestPercentageToWorldPoint(this RouteComputer routeComputer, Vector3 worldPoint)
+        public static bool TryGetClosestWorldPointOnComputer(this RouteComputer routeComputer, Vector3 worldPoint, out Vector3 closestWorldPointOnComputer)
         {
-            return 0;
+            closestWorldPointOnComputer = default;
+            
+            if (!routeComputer.TryGetClosestSamplePoint(worldPoint, out var closestSamplePoint))
+            {
+                return false;
+            }
+
+            closestWorldPointOnComputer = routeComputer.TransformLocalPointToWorldPoint(closestSamplePoint.LocalPosition);
+            
+            return true;
+        }
+
+        public static bool TryGetClosestSamplePoint(this RouteComputer routeComputer, Vector3 worldPoint, out SamplePoint closestSamplePoint)
+        {
+            closestSamplePoint = default;
+
+            var samplePoints = routeComputer.SamplePoints;
+            var samplePointCount = samplePoints.Count;
+            
+            if (samplePointCount <= 0)
+            {
+                return false;
+            }
+
+            var localPoint = routeComputer.TransformWorldPointToLocalPoint(worldPoint);
+            
+            var nearestSamplePoint = routeComputer.SamplePoints[0];
+            var nearestSamplePointDistance = Vector3.Distance(localPoint, nearestSamplePoint.LocalPosition);
+
+            for (var i = 1; i < samplePointCount; i++)
+            {
+                var samplePoint = routeComputer.SamplePoints[i];
+                var distance = Vector3.Distance(localPoint, samplePoint.LocalPosition);
+
+                if (distance <= nearestSamplePointDistance)
+                {
+                    nearestSamplePoint = samplePoint;
+                    nearestSamplePointDistance = distance;
+                }
+            }
+
+            closestSamplePoint = nearestSamplePoint;
+
+            return true;
         }
 
         public static float GetPercentageTraveledByDistanceTraveled(this RouteComputer routeComputer, float distanceTraveled)
@@ -22,14 +66,15 @@ namespace RouteDrifter.Utility.Extensions
             percentage = Mathf.Clamp01(percentage);
             List<SamplePoint> samplePointsAtPercentage = routeComputer.GetSamplePointsAtPercentage(percentage);
             
-            float fractionalSamplePoint = percentage * (routeComputer.SamplePoints.Count - 1);
-            int min = Mathf.FloorToInt(fractionalSamplePoint);
+            var fractionalSamplePoint = percentage * (routeComputer.SamplePoints.Count - 1);
+            var min = Mathf.FloorToInt(fractionalSamplePoint);
 
-            float percentageBetweenSamplePoints = fractionalSamplePoint - min;
+            var percentageBetweenSamplePoints = fractionalSamplePoint - min;
 
-            Vector3 localPosition = Vector3.Lerp(samplePointsAtPercentage[0]._LocalPosition, samplePointsAtPercentage[1]._LocalPosition, percentageBetweenSamplePoints);
+            var localPosition = Vector3.Lerp(samplePointsAtPercentage[0].LocalPosition, samplePointsAtPercentage[1].LocalPosition, percentageBetweenSamplePoints);
 
-            Vector3 worldPositionByPercent = routeComputer.Transform.TransformPoint(localPosition);
+            var worldPositionByPercent = routeComputer.Transform.TransformPoint(localPosition);
+            
             return worldPositionByPercent;
         }
         
@@ -42,49 +87,91 @@ namespace RouteDrifter.Utility.Extensions
         {
             percentage = Mathf.Clamp01(percentage);
             
-            float evenlySpacedPoint = percentage * (routeComputer.SamplePoints.Count - 1);
-            int min = Mathf.FloorToInt(evenlySpacedPoint);
-            int max = Mathf.CeilToInt(evenlySpacedPoint);
+            var evenlySpacedPoint = percentage * (routeComputer.SamplePoints.Count - 1);
+            var min = Mathf.FloorToInt(evenlySpacedPoint);
+            var max = Mathf.CeilToInt(evenlySpacedPoint);
             
-            SamplePoint minSamplePoint = routeComputer.SamplePoints[min];
-            SamplePoint maxSamplePoint = routeComputer.SamplePoints[max];
+            var minSamplePoint = routeComputer.SamplePoints[min];
+            var maxSamplePoint = routeComputer.SamplePoints[max];
             
             return new List<SamplePoint>() {minSamplePoint, maxSamplePoint};
         }
 
-        public static SamplePoint GetSamplePointAtPercentage(this RouteComputer routeComputer, float percentage)
+        public static SamplePoint GetClosestSamplePointAtPercentage(this RouteComputer routeComputer, float percentage)
+        {
+            var samplePointCount = routeComputer.SamplePoints.Count;
+        
+            if (Mathf.Approximately(percentage, 1f))
+            {
+                return routeComputer.SamplePoints[samplePointCount - 1];
+            }
+            
+            if (Mathf.Approximately(percentage, 0f))
+            {
+                return routeComputer.SamplePoints[0];
+            }
+            
+        
+            var percentagePointIndex = (int) (percentage * samplePointCount);
+            percentagePointIndex = Mathf.Clamp(percentagePointIndex, 0, samplePointCount - 1);
+            
+            var lowerPointIndex = Mathf.Clamp(percentagePointIndex - 1, 0, samplePointCount - 1);
+            var upperPointIndex = Mathf.Clamp(percentagePointIndex + 1, 0, samplePointCount - 1);
+            
+            var nearestSamplePoint = routeComputer.SamplePoints[percentagePointIndex];
+
+            var lowerPointSamplePoint = routeComputer.SamplePoints[lowerPointIndex];
+
+            if (Mathf.Abs(lowerPointSamplePoint.Percentage - percentage) <= 
+                Mathf.Abs(nearestSamplePoint.Percentage - percentage))
+            {
+                nearestSamplePoint = lowerPointSamplePoint;
+            }
+            
+            var upperPointSamplePoint = routeComputer.SamplePoints[upperPointIndex];
+            
+            if (Mathf.Abs(upperPointSamplePoint.Percentage - percentage) <= 
+                Mathf.Abs(nearestSamplePoint.Percentage - percentage))
+            {
+                nearestSamplePoint = upperPointSamplePoint;
+            }
+            
+            return nearestSamplePoint;
+        }
+        
+        public static SamplePoint GetLerpedSamplePointAtPercentage(this RouteComputer routeComputer, float percentage)
         {
             var samplePointCount = routeComputer.SamplePoints.Count - 1;
-            float percentagePointIndex = percentage * samplePointCount;
-
-            if (percentage == 1.0f)
+            var percentagePointIndex = percentage * samplePointCount;
+        
+            if (Mathf.Approximately(percentage, 1f))
             {
                 return routeComputer.SamplePoints[samplePointCount];
             }
             
-            int lowerPointIndex = Mathf.FloorToInt(percentagePointIndex);
-            int upperPointIndex = Mathf.Clamp(lowerPointIndex + 1, lowerPointIndex, samplePointCount);
-
+            var lowerPointIndex = Mathf.FloorToInt(percentagePointIndex);
+            var upperPointIndex = Mathf.Clamp(lowerPointIndex + 1, lowerPointIndex, samplePointCount);
+        
             var lowerPointPercentage = (float) lowerPointIndex / (float) samplePointCount;
             var upperPointPercentage = (float) upperPointIndex / (float) samplePointCount;
-
+        
             var samplePointPercentage = (percentage - lowerPointPercentage) / (upperPointPercentage - lowerPointPercentage);
-
+        
             var samplePoint = new SamplePoint()
             {
-                _Forward = Vector3.Lerp(
-                    routeComputer.SamplePoints[lowerPointIndex]._Forward,
-                    routeComputer.SamplePoints[upperPointIndex]._Forward,
+                Forward = Vector3.Lerp(
+                    routeComputer.SamplePoints[lowerPointIndex].Forward,
+                    routeComputer.SamplePoints[upperPointIndex].Forward,
                     samplePointPercentage),
-
-                _LocalPosition = Vector3.Lerp(
-                    routeComputer.SamplePoints[lowerPointIndex]._LocalPosition,
-                    routeComputer.SamplePoints[upperPointIndex]._LocalPosition,
+        
+                LocalPosition = Vector3.Lerp(
+                    routeComputer.SamplePoints[lowerPointIndex].LocalPosition,
+                    routeComputer.SamplePoints[upperPointIndex].LocalPosition,
                     samplePointPercentage)
             };
             
             return samplePoint;
         }
-
+        
     }
 }
