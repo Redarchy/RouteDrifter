@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RouteDrifter.Nodes;
 using Unity.Collections;
@@ -30,6 +31,8 @@ namespace RouteDrifter.Models
         public float Length => _Length;
         public Transform Transform => _ThisTransform;
 
+        public Action<List<SamplePoint>> OnBuild;
+
         protected virtual void Awake()
         {
             InternalInitialize();
@@ -43,6 +46,21 @@ namespace RouteDrifter.Models
         protected virtual void InternalInitialize()
         {
             _ThisTransform = GetComponent<Transform>();
+        }
+
+        public virtual void Set(bool buildOnAwake, float sampleSpacing, float sampleResolution, List<RoutePoint> routePoints)
+        {
+            _BuildOnAwake = buildOnAwake;
+            _SampleSpacing = sampleSpacing;
+            _SampleResolution = sampleResolution;
+            _RoutePoints = routePoints;
+            
+            // Needed to call it again for instantiating at runtime, not as a scene root object.
+            // Because Awake is called as soon as the object gets instantiated.
+            if (buildOnAwake)
+            {
+                Build();
+            }
         }
         
         #region Node Connections
@@ -102,6 +120,8 @@ namespace RouteDrifter.Models
             UpdateLength();
             UpdateSamplePointPercentages();
             ValidateNodeConnections();
+            
+            OnBuild?.Invoke(new List<SamplePoint>(_SamplePoints));
         }
 
         private void ValidateNodeConnections()
@@ -384,6 +404,11 @@ namespace RouteDrifter.Models
 #if UNITY_EDITOR
         protected virtual void OnValidate()
         {
+            if (_RoutePoints == null)
+            {
+                _RoutePoints = new List<RoutePoint>();
+            }
+            
             _ThisTransform = GetComponent<Transform>();
             SetRoutePointIndices();
             Build();

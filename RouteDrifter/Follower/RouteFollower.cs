@@ -56,6 +56,20 @@ namespace RouteDrifter.Follower
         // }
         
         #endregion
-        
+
+        public void SetLinearSpeed(float speed)
+        {
+            _LinearSpeed = speed;
+        }
+
+        public void SetFaceDirection(bool faceDirection)
+        {
+            _FaceDirection = faceDirection;
+        }
+
+        public void SetOffset(Vector3 offset)
+        {
+            _OffsetByLocalDirection = offset;
+        }
     }
 }
