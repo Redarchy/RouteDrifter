@@ -22,6 +22,7 @@ namespace RouteDrifter.Follower
         [SerializeField][Range(0f, 50f)] public float _LinearSpeed;
         [SerializeField] public Vector3 _OffsetByLocalDirection;
         [SerializeField] [ReadOnly] public float _DistanceTraveled;
+        [SerializeField] public bool _ReversedMovement;
 
         #endregion
         
@@ -65,8 +66,12 @@ namespace RouteDrifter.Follower
         private void CheckForNode(float percentageBeforeUpdate)
         {
             var nodeConnections = ListPool<RouteNodeConnection>.Get();
+            nodeConnections.Clear();
             
-            if (_RouteComputer.TryGetNodeConnectionsNonAlloc(percentageBeforeUpdate, _CurrentPercentage, nodeConnections))
+            var forwardPercentageOnComputer = _ReversedMovement ? percentageBeforeUpdate : _CurrentPercentage;
+            var rearPercentageOnComputer = _ReversedMovement ? _CurrentPercentage : percentageBeforeUpdate;
+            
+            if (_RouteComputer.TryGetNodeConnectionsNonAlloc(rearPercentageOnComputer, forwardPercentageOnComputer, nodeConnections))
             {
                 OnNode?.Invoke(nodeConnections);
             }
@@ -77,7 +82,10 @@ namespace RouteDrifter.Follower
 
         private void UpdateCurrentPercentage(float updateTime)
         {
-            var distanceTraveled = _DistanceTraveled + _LinearSpeed * updateTime;
+            var distanceChange = _LinearSpeed * updateTime;
+            distanceChange *= _ReversedMovement ? -1 : 1;
+            
+            var distanceTraveled = _DistanceTraveled + distanceChange;
             _CurrentPercentage = _RouteComputer.GetPercentageTraveledByDistanceTraveled(distanceTraveled);
             _DistanceTraveled = _RouteComputer.Length * _CurrentPercentage;
         }
@@ -86,14 +94,23 @@ namespace RouteDrifter.Follower
         {
             var samplePoint = _RouteComputer.GetLerpedSamplePointAtPercentage(_CurrentPercentage);
             _Position = _RouteComputer.TransformLocalPointToWorldPoint(samplePoint.LocalPosition);
-            _Rotation = Quaternion.LookRotation(samplePoint.Forward);
+            
+            var forwardDirection = samplePoint.Forward;
+            forwardDirection *= _ReversedMovement ? -1 : 1;
+            _Rotation = Quaternion.LookRotation(forwardDirection);
         }
 
         private void CheckForReachEnd()
         {
-            if (_LinearSpeed > 0f && _CurrentPercentage >= 1f)
+            var endPercentage = _ReversedMovement ? 0f : 1f;
+            
+            var isReachedEndPercentage = _ReversedMovement
+                ? _CurrentPercentage <= endPercentage
+                : _CurrentPercentage >= endPercentage;
+            
+            if (_LinearSpeed > 0f && isReachedEndPercentage)
             {
-                _CurrentPercentage = 1f;
+                _CurrentPercentage = endPercentage;
                 _Follow = false;
                 OnReachedEnd?.Invoke();
             }

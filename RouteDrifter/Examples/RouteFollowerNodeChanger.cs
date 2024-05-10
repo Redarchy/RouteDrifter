@@ -14,7 +14,13 @@ namespace RouteDrifter.Examples
             if (_Follower != null)
             {
                 _Follower.OnNode += OnNode;
+                _Follower.OnReachedEnd += OnReachedEnd;
             }
+        }
+
+        private void OnReachedEnd()
+        {
+            Debug.Log("Reached End!");
         }
 
         private void OnNode(List<RouteNodeConnection> connections)
