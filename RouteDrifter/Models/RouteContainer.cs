@@ -332,6 +332,11 @@ namespace RouteDrifter.Models
         {
             foreach (var connection in _NodeConnections)
             {
+                if (!connection.Node.IsActive)
+                {
+                    continue;
+                }
+                
                 if (startPercentage < connection.PercentageFractionOnComputer && connection.PercentageFractionOnComputer < endPercentage)
                 {
                     nodeConnections.AddRange(connection.Node.Connections);

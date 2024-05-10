@@ -359,6 +359,7 @@ MonoBehaviour:
       Tangent: {x: 0, y: 0, z: 1}
     Node: {fileID: 127234728}
     PercentageFractionOnComputer: 0.5045042
+  _Active: 1
 --- !u!4 &127234729
 Transform:
   m_ObjectHideFlags: 0

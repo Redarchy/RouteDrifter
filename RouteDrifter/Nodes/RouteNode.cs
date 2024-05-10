@@ -11,9 +11,11 @@ namespace RouteDrifter.Nodes
     public class RouteNode : MonoBehaviour
     {
         [SerializeField] private List<RouteNodeConnection> _Connections;
+        [SerializeField] private bool _Active;
 
         public IReadOnlyList<RouteNodeConnection> Connections => _Connections;
-
+        public bool IsActive => _Active;
+        
         public bool TryConnectComputer(RouteComputer computer, RoutePoint routePoint)
         {
             foreach (var connection in _Connections)
@@ -131,6 +133,10 @@ namespace RouteDrifter.Nodes
             connections.Clear();
             ListPool<RouteNodeConnection>.Release(connections);
         }
-        
+
+        public void SetActivation(bool isToggled)
+        {
+            _Active = isToggled;
+        }
     }
 }

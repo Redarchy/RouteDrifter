@@ -52,6 +52,17 @@ namespace RouteDrifter.Editor
             }
 
             _rootVisualElement.Add(connectionBox);
+
+            var activationToggle = new Toggle("Active");
+            activationToggle.value = _routeNode.IsActive;
+            activationToggle.RegisterValueChangedCallback(toggleChange =>
+            {
+                _routeNode.SetActivation(toggleChange.newValue);
+                SaveRouteNode();
+            });
+            
+            _rootVisualElement.Add(activationToggle);
+            
             _rootVisualElement.Add(CreateAddNewConnectionButton());
         }
 
