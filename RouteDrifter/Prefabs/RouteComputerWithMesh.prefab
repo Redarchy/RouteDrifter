@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7236917749576346233}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7236917749908046160}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7236917749576346237
 MeshFilter:
@@ -129,6 +129,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7236917749908046162}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -136,7 +137,6 @@ Transform:
   m_Children:
   - {fileID: 7236917749576346238}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7236917749908046163
 MonoBehaviour:
@@ -151,14 +151,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _RoutePoints:
-  - _Position: {x: 0, y: 0, z: 0}
-    _Tangent: {x: -0.15004969, y: 0, z: 1.3136234}
-  - _Position: {x: 1.0866503, y: 0, z: 1.790491}
-    _Tangent: {x: -0.51715326, y: 0, z: -1.0516696}
-  - _Position: {x: 3.8993983, y: 0, z: 0}
-    _Tangent: {x: 0.40779734, y: 0, z: 1.673324}
+  - Index: 0
+    Position: {x: 0, y: 0, z: 0}
+    Tangent: {x: 0, y: 0, z: 0}
+  - Index: 1
+    Position: {x: 0, y: 0, z: 0}
+    Tangent: {x: 0, y: 0, z: 0}
+  - Index: 2
+    Position: {x: 0, y: 0, z: 0}
+    Tangent: {x: 0, y: 0, z: 0}
   _BuildOnAwake: 0
   _SampleSpacing: 0.092
   _SampleResolution: 0.033
-  _Length: 6.532
+  _Length: 0
   _ThisTransform: {fileID: 7236917749908046160}
+  _BezierCurves: []
+  _SamplePoints:
+  - LocalPosition: {x: 0, y: 0, z: 0}
+    Forward: {x: 0, y: 0, z: 0}
+    Percentage: 0
+  _NodeConnections: []
