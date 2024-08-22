@@ -378,6 +378,23 @@ namespace RouteDrifter.Models
 
             return routeSegment;
         }
+        
+        public SamplePoint GetSamplePointByPercentage(float percentage)
+        {
+            percentage = Mathf.Clamp01(percentage);
+
+            for (var i = 0; i < _SamplePoints.Count - 2; i++)
+            {
+                var current = _SamplePoints[i];
+                var next = _SamplePoints[i + 1];
+                if (current.Percentage <= percentage && next.Percentage > percentage)
+                {
+                    return current;
+                }
+            }
+
+            return _SamplePoints[^1];
+        }
 
         #endregion
 
