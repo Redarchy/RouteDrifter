@@ -126,11 +126,11 @@ namespace RouteDrifter.Follower
             _thisTransform.position = _Position + GetOffsetAddition();
         }
 
-        public void SetPercentage(float percentage)
+        public void SetPercentage(float percentage, bool updateTransform = true)
         {
             _CurrentPercentage = Mathf.Clamp01(percentage);
 
-            if (_RouteComputer != null)
+            if (_RouteComputer != null && updateTransform)
             {
                 _DistanceTraveled = _RouteComputer.GetDistanceTraveledByPercentage(_CurrentPercentage);
                 CalculateTransformValues();
