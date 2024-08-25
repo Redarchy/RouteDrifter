@@ -5,4 +5,10 @@ namespace RouteDrifter.Models
         Percentage,
         Distance,
     }
+    
+    public enum RouteFollowerMovementDirection
+    {
+        Straight,
+        Reversed
+    }
 }
