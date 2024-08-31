@@ -146,6 +146,8 @@ namespace RouteDrifter.Follower
             offset += _thisTransform.right * _OffsetByLocalDirection.x;
             offset += _thisTransform.up * _OffsetByLocalDirection.y;
             offset += _thisTransform.forward * _OffsetByLocalDirection.z;
+
+            offset *= _Direction == RouteFollowerMovementDirection.Straight ? 1f : -1f;
             
             return offset;
         }

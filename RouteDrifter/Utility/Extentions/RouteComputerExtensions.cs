@@ -139,6 +139,53 @@ namespace RouteDrifter.Utility.Extensions
             return nearestSamplePoint;
         }
         
+        public static SamplePoint GetClosestLowerIndexSamplePointAtPercentage(this RouteComputer routeComputer, float percentage)
+        {
+            var samplePointCount = routeComputer.SamplePoints.Count;
+        
+            if (Mathf.Approximately(percentage, 1f))
+            {
+                return routeComputer.SamplePoints[samplePointCount - 1];
+            }
+            
+            if (Mathf.Approximately(percentage, 0f))
+            {
+                return routeComputer.SamplePoints[0];
+            }
+        
+            var percentagePointIndex = (int) (percentage * samplePointCount);
+            percentagePointIndex = Mathf.Clamp(percentagePointIndex, 0, samplePointCount - 1);
+            
+            var lowerPointIndex = Mathf.Clamp(percentagePointIndex - 1, 0, samplePointCount - 1);
+            var lowerPointSamplePoint = routeComputer.SamplePoints[lowerPointIndex];
+            
+            return lowerPointSamplePoint;
+        }
+        
+        public static SamplePoint GetClosestUpperIndexSamplePointAtPercentage(this RouteComputer routeComputer, float percentage)
+        {
+            var samplePointCount = routeComputer.SamplePoints.Count;
+        
+            if (Mathf.Approximately(percentage, 1f))
+            {
+                return routeComputer.SamplePoints[samplePointCount - 1];
+            }
+            
+            if (Mathf.Approximately(percentage, 0f))
+            {
+                return routeComputer.SamplePoints[0];
+            }
+        
+            var percentagePointIndex = (int) (percentage * samplePointCount);
+            percentagePointIndex = Mathf.Clamp(percentagePointIndex, 0, samplePointCount - 1);
+            
+            var upperPointIndex = Mathf.Clamp(percentagePointIndex + 1, 0, samplePointCount - 1);
+            
+            var upperPointSamplePoint = routeComputer.SamplePoints[upperPointIndex];
+            
+            return upperPointSamplePoint;
+        }
+        
         public static SamplePoint GetLerpedSamplePointAtPercentage(this RouteComputer routeComputer, float percentage)
         {
             var samplePointCount = routeComputer.SamplePoints.Count - 1;
