@@ -172,6 +172,22 @@ namespace RouteDrifter.Utility.Extensions
             
             return samplePoint;
         }
+
+        public static Vector3 GetSamplePointRotatedLeftLocal(this RouteComputer routeComputer, SamplePoint samplePoint)
+        {
+            var rotatedLeft = (Quaternion.AngleAxis(-90, Vector3.up) * samplePoint.Forward).normalized;
+            rotatedLeft *= routeComputer.Width / 2f;
+
+            return samplePoint.LocalPosition + rotatedLeft;
+        }
+        
+        public static Vector3 GetSamplePointRotatedRightLocal(this RouteComputer routeComputer, SamplePoint samplePoint)
+        {
+            var rotatedRight = (Quaternion.AngleAxis(90, Vector3.up) * samplePoint.Forward).normalized;
+            rotatedRight *= routeComputer.Width / 2f;
+
+            return samplePoint.LocalPosition + rotatedRight;
+        }
         
     }
 }

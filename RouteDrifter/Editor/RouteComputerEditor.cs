@@ -61,7 +61,7 @@ namespace RouteDrifter.Editor
             style.normal.textColor = Color.white;
             style.fontStyle = FontStyle.Bold;
             
-            float sampleWidth = _routeContainer.Width;
+            float sampleHalfWidth = _routeContainer.Width / 2f;
 
             Vector3 previousLeft = new Vector3();
             Vector3 previousRight = new Vector3();
@@ -78,10 +78,10 @@ namespace RouteDrifter.Editor
                 Vector3 worldPoint = _routeContainer.TransformLocalPointToWorldPoint(samplePoint.LocalPosition);
 
                 Vector3 rotatedLeft = (Quaternion.AngleAxis(-90, Vector3.up) * samplePoint.Forward).normalized;
-                rotatedLeft = worldPoint + rotatedLeft * sampleWidth;
+                rotatedLeft = worldPoint + rotatedLeft * sampleHalfWidth;
                      
                 Vector3 rotatedRight = (Quaternion.AngleAxis(90, Vector3.up) * samplePoint.Forward).normalized;
-                rotatedRight = worldPoint + rotatedRight * sampleWidth;
+                rotatedRight = worldPoint + rotatedRight * sampleHalfWidth;
                     
                 Handles.DrawLine(rotatedLeft, rotatedRight);
 
@@ -95,7 +95,7 @@ namespace RouteDrifter.Editor
                 previousRight = rotatedRight;
                      
                 // Draw SamplePoint Forward
-                float forwardLength = sampleWidth - 0.12f;
+                float forwardLength = 0.1f;
                 Handles.color = Color.blue;
                 Handles.DrawLine(worldPoint, worldPoint + samplePoint.Forward * forwardLength, 3f);
             }
