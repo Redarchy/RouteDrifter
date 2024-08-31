@@ -16,6 +16,7 @@ namespace RouteDrifter.Models
         [SerializeField] protected bool _BuildOnAwake;
         [SerializeField, Range(0.005f, 1)] private float _SampleSpacing = 1f;
         [SerializeField, Range(0.005f, 1)] private float _SampleResolution = 1f;
+        [SerializeField] protected float _Width = 1f;
         [SerializeField, ReadOnly] private float _Length;
         [SerializeField, ReadOnly] private Transform _ThisTransform;
 
@@ -30,6 +31,7 @@ namespace RouteDrifter.Models
         public List<RouteBezierCurve> BezierCurves => _BezierCurves;
         public float Length => _Length;
         public Transform Transform => _ThisTransform;
+        public float Width => _Width;
 
         public Action<List<SamplePoint>> OnBuild;
 
