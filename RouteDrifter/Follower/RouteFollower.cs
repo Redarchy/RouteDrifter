@@ -1,5 +1,6 @@
 using RouteDrifter.Gizmos;
 using Gizmos.Events;
+using RouteDrifter.Models;
 using RouteDrifter.RouteEvents;
 using RouteDrifter.RouteEvents.Followers;
 using RouteDrifter.Utility.Attributes;
@@ -65,6 +66,11 @@ namespace RouteDrifter.Follower
         public void SetFaceDirection(bool faceDirection)
         {
             _FaceDirection = faceDirection;
+        }
+
+        public void SetMovementDirection(RouteFollowerMovementDirection direction)
+        {
+            _Direction = direction;
         }
 
         public void SetOffset(Vector3 offset)
